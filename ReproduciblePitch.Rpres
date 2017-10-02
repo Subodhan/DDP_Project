@@ -1,0 +1,61 @@
+Horse Power prediction models
+========================================================
+author: Subodhan B Gadgil
+date: October 2, 2017
+autosize: true
+
+Power of Data
+========================================================
+
+Using statistical analysis methods, we can find relationships within the available data. Using these relationships, it is possible to predict the outcome. The horse power of a car varies proportionate to the fuel consumption. The relationship can be seen in the plot below.
+
+```{r, echo=FALSE}
+plot(mtcars$mpg, mtcars$hp)
+```
+
+Modeling and Prediction
+========================================================
+
+We can use multiple strategies to explain the relationship. These strategies (or Models) can also be used to predict outcome, given the input values.
+
+We can show how different models can be crafted to explain the relationships. We will see this on the next slide.
+ 
+Two Model presentation 
+========================================================
+Two models (one in Red and another in Blue) depict how the hp varies by the mpg.
+
+```{r, echo=FALSE}
+  mtcars$mpgsp <- ifelse(mtcars$mpg - 20 > 0, mtcars$mpg - 20, 0)
+  model1 <- lm(hp ~ mpg, data = mtcars)
+  model2 <- lm(hp ~ mpgsp + mpg, data = mtcars)
+
+  mpgInput = 20
+  model1pred <- predict(model1, newdata = data.frame(mpg = mpgInput))
+  model2pred <- predict(model2, newdata = data.frame(mpg = mpgInput,
+                                        mpgsp = ifelse(mpgInput - 20 > 0,
+                                        mpgInput - 20, 0)))
+
+  plot(mtcars$mpg, mtcars$hp, xlab = "Miles Per Gallon", 
+         ylab = "Horsepower", bty = "n", pch = 16,
+         xlim = c(10, 35), ylim = c(50, 350))
+  abline(model1, col = "red", lwd = 2)
+  points(mpgInput, model1pred, col = "red", pch = 16, cex = 2)
+  model2lines <- predict(model2, newdata = data.frame(
+        mpg = 10:35, mpgsp = ifelse(10:35 - 20 > 0, 10:35 - 20, 0)
+      ))
+  lines(10:35, model2lines, col = "blue", lwd = 2)
+  points(mpgInput, model2pred, col = "blue", pch = 16, cex = 2)
+
+  legend(25, 250, c("Model 1 Prediction", "Model 2 Prediction"), pch = 16, 
+           col = c("red", "blue"), bty = "n", cex = 1.2)
+  
+```
+
+
+Application
+========================================================
+
+The hp prediction application allows a user to select multiple input parameters, such as mpg, cylinders and displacement. A user can also select to see 'Model 1 predictions' or 'Model 2 predictions'.
+
+To use the aplication, please visit
+https://subodhan.shinyapps.io/ddp_project
