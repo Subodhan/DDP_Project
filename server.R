@@ -56,6 +56,9 @@ shinyServer(function(input, output) {
                                         mpgInput - 20, 0)))
   })
   
+  output$docHead <- renderText("Documention")
+  output$docMsg <- renderText("The interactive documentation is <a href=\"https://subodhan.shinyapps.io/ddp_project_documentation\">here</a>")
+  
   output$plot1 <- renderPlot({
     mpgInput <- input$sliderMPG
     plot(mtcars$mpg, mtcars$hp, xlab = "Miles Per Gallon", 

@@ -1,6 +1,9 @@
 library(shiny)
 
-shinyUI(fluidPage(
+shinyUI(
+  navbarPage("HorsePower prediction App",
+             tabPanel("App",
+  fluidPage(
   titlePanel("Predict Horsepower from MPG"),
   sidebarLayout(
     sidebarPanel(
@@ -14,19 +17,23 @@ shinyUI(fluidPage(
     mainPanel(
       tabsetPanel(type = "tabs",
                   tabPanel("Plot",
-                  plotOutput("plot1")
+                           plotOutput("plot1")
+                  
                   ),
                   tabPanel("Model with Cyl",
                     h3("Predicted Horsepower from Model with Cylinders:"),
                     plotOutput("plot2")
-                    #textOutput("pred1")
                   ),
                   tabPanel("Model with Disp",
                     h3("Predicted Horsepower from Model with Displacement:"),
                     plotOutput("plot3")
-                    #textOutput("pred2")
                   )
       )
     )
   )
+)),
+tabPanel("About",
+         h3("Documentation"),
+         br(),
+         htmlOutput("docMsg"))
 ))
